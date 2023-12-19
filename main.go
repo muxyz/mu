@@ -7,19 +7,16 @@ import (
 )
 
 func run(source string) {
-	if source == "." {
-		cmd := exec.Command("go", "run", ".")
-		cmd.Stdout = os.Stdout
-		cmd.Stderr = os.Stderr
-		if err := cmd.Run(); err != nil {
-			fmt.Println(err)
-			out, _ := cmd.CombinedOutput()
-			fmt.Println(string(out))
-			return
-		}
+	cmd := exec.Command("go", "run", ".")
+	cmd.Dir = source
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		fmt.Println(err)
+		out, _ := cmd.CombinedOutput()
+		fmt.Println(string(out))
+		return
 	}
-
-	fmt.Println("unsupported source")
 }
 
 func main() {
