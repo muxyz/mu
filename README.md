@@ -26,6 +26,12 @@ Run from source
 mu run [path/to/source]
 ```
 
+List built binaries
+
+```bash
+mu list
+```
+
 ### Examples
 
 Build the binary
@@ -36,7 +42,7 @@ Building github.com/muxyz/news
 Built /home/asim/mu/bin/news
 
 # run it
-$ /home/asim/mu/bin/news
+$ mu run news
 ```
 
 Run from source
@@ -47,5 +53,5 @@ Running github.com/muxyz/news
 
 Run any binary
 ```bash
-$ mu run /home/asim/mu/bin/news
+$ mu run /my/local/news/binary/news
 ```

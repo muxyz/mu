@@ -2,10 +2,12 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"os"
 	"os/exec"
 	"os/signal"
 	"path/filepath"
+	"strings"
 	"syscall"
 	"time"
 )
@@ -68,7 +70,16 @@ func run(source string, update, kill chan bool) {
 	fmt.Println("Running", source)
 
 	f, err := os.Stat(source)
-	if err != nil {
+	if err != nil && strings.Contains(err.Error(), "no such file or directory") {
+		// check bin dir
+		f, err = os.Stat(filepath.Join(Bin, source))
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		// rewrite source location
+		source = filepath.Join(Bin, source)
+	} else if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
@@ -156,6 +167,21 @@ func watch(filePath string, update chan bool) error {
 	}
 }
 
+func list(path string) {
+	files, err := ioutil.ReadDir(path)
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
+
+	for _, file := range files {
+		if file.IsDir() {
+			continue
+		}
+		fmt.Println(file.Name())
+	}
+}
+
 func main() {
 	args := os.Args[1:]
 
@@ -168,6 +194,8 @@ func main() {
 
 	switch command {
 	case "build":
+		// build from source
+
 		if len(args) == 0 {
 			fmt.Println("provide source")
 			return
@@ -182,6 +210,8 @@ func main() {
 		}
 		fmt.Println("Built", filepath.Join(Bin, name))
 	case "run":
+		// run from source (or a binary)
+
 		if len(args) == 0 {
 			fmt.Println("provide source")
 			return
@@ -201,6 +231,9 @@ func main() {
 
 		// kill the process
 		close(kill)
+	case "list":
+		// list available binaries
+		list(Bin)
 	default:
 		fmt.Println("unknown command")
 	}
