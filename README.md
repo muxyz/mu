@@ -34,6 +34,7 @@ Build the binary
 $ mu build github.com/muxyz/news
 Building github.com/muxyz/news
 Built /home/asim/mu/bin/news
+
 # run it
 $ /home/asim/mu/bin/news
 ```
@@ -44,3 +45,7 @@ $ mu run github.com/muxyz/news
 Running github.com/muxyz/news
 ```
 
+Run any binary
+```bash
+$ mu run /home/asim/mu/bin/news
+```

@@ -67,16 +67,32 @@ func build(source string) (string, error) {
 func run(source string, update, kill chan bool) {
 	fmt.Println("Running", source)
 
-	name, err := build(source)
+	f, err := os.Stat(source)
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
-		return
+	}
+
+	var name string
+	var path string
+
+	// directory assumed to be source
+	if f.IsDir() {
+		name, err = build(source)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		path = filepath.Join(Bin, name)
+	} else {
+		// otherwise its a binary
+		name = filepath.Base(source)
+		path = source
 	}
 
 	exit := make(chan bool)
 
-	cmd := exec.Command(filepath.Join(Bin, name))
+	cmd := exec.Command(path)
 	cmd.Dir = Bin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
