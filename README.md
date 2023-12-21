@@ -9,18 +9,38 @@ Building blocks for life
 ## Setup
 
 ```
-go install github.com/muxyz/mu/cmd/mu@latest
+go install mu.dev/cmd/mu@latest
 ```
 
 ## Usage
+
+Build a binary
+
+```
+mu build [path/to/source]
+```
+
+Run from source
 
 ```
 mu run [path/to/source]
 ```
 
-Example
+### Examples
 
+Build the binary
 ```
-mu run github.com/muxyz/news
+# build it
+$ mu build github.com/muxyz/news
+Building github.com/muxyz/news
+Built /home/asim/mu/bin/news
+# run it
+$ /home/asim/mu/bin/news
+```
+
+Run from source
+```
+$ mu run github.com/muxyz/news
+Running github.com/muxyz/news
 ```
 
