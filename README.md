@@ -9,7 +9,7 @@ Building blocks for life
 ## Setup
 
 ```
-go get github.com/muxyz/mu
+go install github.com/muxyz/mu/cmd/mu@latest
 ```
 
 ## Usage

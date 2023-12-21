@@ -151,6 +151,20 @@ func main() {
 	args = args[1:]
 
 	switch command {
+	case "build":
+		if len(args) == 0 {
+			fmt.Println("provide source")
+			return
+		}
+		source := args[0]
+
+		fmt.Println("Building", source)
+		name, err := build(source)
+		if err != nil {
+			fmt.Println(err)
+			os.Exit(1)
+		}
+		fmt.Println("Built", filepath.Join(Bin, name))
 	case "run":
 		if len(args) == 0 {
 			fmt.Println("provide source")
