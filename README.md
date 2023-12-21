@@ -36,8 +36,8 @@ mu list
 
 Build the binary
 ```bash
-$ mu build github.com/muxyz/news
-Building github.com/muxyz/news
+$ mu build ../news
+Building news
 Built /home/asim/mu/bin/news
 ```
 
