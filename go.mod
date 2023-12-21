@@ -1,3 +1,3 @@
-module github.com/muxyz/mu
+module mu.dev
 
 go 1.20
