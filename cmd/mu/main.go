@@ -53,6 +53,8 @@ func build(source string) (string, error) {
 		name = filepath.Base(path)
 	}
 
+	fmt.Println("Building", name)
+
 	cmd := exec.Command("go", "build", "-o", filepath.Join(Bin, name), "./main.go")
 	cmd.Dir = source
 	cmd.Stdout = os.Stdout
@@ -63,12 +65,13 @@ func build(source string) (string, error) {
 		fmt.Println(string(out))
 		return "", err
 	}
+
+	fmt.Println("Built", filepath.Join(Bin, name))
+
 	return name, nil
 }
 
 func run(source string, update, kill chan bool) {
-	fmt.Println("Running", source)
-
 	f, err := os.Stat(source)
 	if err != nil && strings.Contains(err.Error(), "no such file or directory") {
 		// check bin dir
@@ -102,6 +105,8 @@ func run(source string, update, kill chan bool) {
 	}
 
 	exit := make(chan bool)
+
+	fmt.Println("Running", name)
 
 	cmd := exec.Command(path)
 	cmd.Dir = Bin
@@ -202,13 +207,11 @@ func main() {
 		}
 		source := args[0]
 
-		fmt.Println("Building", source)
-		name, err := build(source)
+		_, err := build(source)
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)
 		}
-		fmt.Println("Built", filepath.Join(Bin, name))
 	case "run":
 		// run from source (or a binary)
 

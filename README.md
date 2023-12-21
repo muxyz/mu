@@ -36,19 +36,30 @@ mu list
 
 Build the binary
 ```bash
-# build it
 $ mu build github.com/muxyz/news
 Building github.com/muxyz/news
 Built /home/asim/mu/bin/news
+```
 
-# run it
+Check it exists
+
+```bash
+$ mu list
+news
+```
+
+Run it
+```
 $ mu run news
 ```
 
 Run from source
+
 ```bash
-$ mu run github.com/muxyz/news
-Running github.com/muxyz/news
+$ mu run .
+Building news
+Built /home/asim/mu/bin/news
+Running news
 ```
 
 Run any binary
