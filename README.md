@@ -61,8 +61,3 @@ Building news
 Built /home/asim/mu/bin/news
 Running news
 ```
-
-Run any binary
-```bash
-$ mu run /my/local/news/binary/news
-```
