@@ -20,16 +20,16 @@ Build a binary
 mu build [source]
 ```
 
-Run the app
-
-```bash
-mu run [app]
-```
-
-List built binaries
+List binaries
 
 ```bash
 mu list
+```
+
+Run an app
+
+```bash
+mu run [app]
 ```
 
 ### Examples
