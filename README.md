@@ -20,10 +20,10 @@ Build a binary
 mu build [path/to/source]
 ```
 
-Run from source
+Run the app
 
 ```bash
-mu run [path/to/source]
+mu run [app]
 ```
 
 List built binaries
