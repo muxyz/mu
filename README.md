@@ -17,7 +17,7 @@ go install mu.dev/cmd/mu@latest
 Build a binary
 
 ```bash
-mu build [path/to/source]
+mu build [source]
 ```
 
 Run the app
