@@ -1,6 +1,10 @@
 # mu
 
-Building blocks for life
+A Go app platform
+
+## Overview
+
+Mu is an app platform that provides some simple help around Go app development. It looks to be a non intrusive and easy way to extend existing workflows. 
 
 ## Dependencies
 
