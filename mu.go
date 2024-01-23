@@ -67,7 +67,7 @@ func init() {
 	}
 }
 
-func Encrypt(stringToEncrypt string, keyString string) (encryptedString string) {
+func encrypt(stringToEncrypt string, keyString string) (encryptedString string) {
 	//Since the key is in string, we need to convert decode it to bytes
 	key, _ := hex.DecodeString(keyString)
 	plaintext := []byte(stringToEncrypt)
@@ -97,7 +97,7 @@ func Encrypt(stringToEncrypt string, keyString string) (encryptedString string) 
 	return fmt.Sprintf("%x", ciphertext)
 }
 
-func Decrypt(encryptedString string, keyString string) (decryptedString string) {
+func decrypt(encryptedString string, keyString string) (decryptedString string) {
 	key, _ := hex.DecodeString(keyString)
 	enc, _ := hex.DecodeString(encryptedString)
 
@@ -126,4 +126,12 @@ func Decrypt(encryptedString string, keyString string) (decryptedString string) 
 	}
 
 	return fmt.Sprintf("%s", plaintext)
+}
+
+func Encrypt(text string) string {
+	return encrypt(text, Key)
+}
+
+func Decrypt(text string) string {
+	return decrypt(text, Key)
 }
