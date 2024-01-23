@@ -146,12 +146,12 @@ func save(data interface{}, file, key string) error {
 }
 
 func load(data interface{}, file, key string) error {
-	_, err := os.Stat(file)
+	cache := filepath.Join(Cache, file)
+
+	_, err := os.Stat(cache)
 	if err != nil {
 		return err
 	}
-
-	cache := filepath.Join(Cache, file)
 
 	// file exists
 	b, err := os.ReadFile(cache)
