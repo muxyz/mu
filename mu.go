@@ -5,6 +5,7 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"io"
 	"os"
@@ -128,10 +129,61 @@ func decrypt(encryptedString string, keyString string) (decryptedString string) 
 	return fmt.Sprintf("%s", plaintext)
 }
 
+func save(data interface{}, file, key string) error {
+	cache := filepath.Join(Cache, file)
+
+	// encode data
+	b, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+
+	// encrypt it
+	e := encrypt(string(b), Key)
+
+	// write the data
+	return os.WriteFile(cache, []byte(e), 0644)
+}
+
+func load(data interface{}, file, key string) error {
+	_, err := os.Stat(file)
+	if err != nil {
+		return err
+	}
+
+	cache := filepath.Join(Cache, file)
+
+	// file exists
+	b, err := os.ReadFile(cache)
+	if err != nil {
+		return err
+	}
+
+	if len(b) == 0 {
+		return nil
+	}
+
+	d := decrypt(string(b), Key)
+
+	return json.Unmarshal([]byte(d), data)
+}
+
+// Encrypt text using AES-256 and secret key
 func Encrypt(text string) string {
 	return encrypt(text, Key)
 }
 
+// Decrypt text using AES-256 and secret key
 func Decrypt(text string) string {
 	return decrypt(text, Key)
+}
+
+// Save data to the cache
+func Save(data interface{}, file string) error {
+	return save(data, file, Key)
+}
+
+// Load data from cache
+func Load(data interface{}, file string) error {
+	return load(data, file, Key)
 }
