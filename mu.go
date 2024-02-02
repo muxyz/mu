@@ -8,8 +8,10 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // user home dir
@@ -166,6 +168,14 @@ func load(data interface{}, file, key string) error {
 	d := decrypt(string(b), Key)
 
 	return json.Unmarshal([]byte(d), data)
+}
+
+// Backoff is for exponential backoff
+func Backoff(attempts int) time.Duration {
+	if attempts > 13 {
+		return time.Hour
+	}
+	return time.Duration(math.Pow(float64(attempts), math.E)) * time.Millisecond * 100
 }
 
 // Encrypt text using AES-256 and secret key
