@@ -236,12 +236,12 @@ func Template(name, desc, nav, content string) string {
   }
   #info { margin-top: 5px;}
   #nav {
-    position: sticky; top: 20; background: white;
+    position: fixed; top: 20; background: white;
     padding: 10px 0; overflow-x: scroll; white-space: nowrap; width: 20%%;
     margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
     z-index: 100;
   }
-  #content { padding-bottom: 100px; display: block; width: 70%%; display: inline-block; }
+  #content { padding-bottom: 100px; display: block; width: 70%%; margin-left: 30%%; display: inline-block; }
   .head { margin-right: 10px; font-weight: bold; }
   a.head { display: block; margin-bottom: 20px; }
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
@@ -261,6 +261,7 @@ func Template(name, desc, nav, content string) string {
     #content {
       width: 100%%;
       display: block;
+      margin-left: 0;
     }
     a.head {
       display: inline-block;
