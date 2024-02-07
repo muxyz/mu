@@ -274,7 +274,7 @@ func Template(name, desc, nav, content string) string {
 </head>
 <body>
   <div id="nav">%s</div>
-  <div id="news">%s</div>
+  <div id="content">%s</div>
 </body>
 </html>
 `, name, desc, nav, content)
