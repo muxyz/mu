@@ -203,8 +203,8 @@ func Template(name, desc, nav, content string) string {
 	return fmt.Sprintf(`<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="description" content="%s">
   <title>%s | Mu</title>
+  <meta name="description" content="%s">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
   body {
