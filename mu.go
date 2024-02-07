@@ -197,3 +197,86 @@ func Save(data interface{}, file string) error {
 func Load(data interface{}, file string) error {
 	return load(data, file, Key)
 }
+
+// The standard HTML template
+func Template(name, desc, nav, content string) string {
+	return fmt.Sprintf(`<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="description" content="%s">
+  <title>%s | Mu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  body {
+	  font-family: arial;
+	  font-size: 14px;
+	  color: darkslategray;
+	  margin: 0 auto;
+	  padding: 20px;
+	  max-width: 1600px;
+  }
+  a { color: black; text-decoration: none; }
+  button:hover { cursor: pointer; }
+  .anchor {
+    top: -75px;
+    margin-top: 75px;
+    visibility: hidden;
+    position: relative;
+    display: block;
+
+  }
+  .category {
+    font-weight: bold;
+    font-size: small;
+    padding: 5px;
+    background: whitesmoke;
+  }
+  .headline {
+    margin-bottom: 25px;
+  }
+  #info { margin-top: 5px;}
+  #nav {
+    position: sticky; top: 20; background: white;
+    padding: 10px 0; overflow-x: scroll; white-space: nowrap; width: 20%%;
+    margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
+  }
+  #content { padding-bottom: 100px; display: block; width: 70%%; display: inline-block; }
+  .head { margin-right: 10px; font-weight: bold; }
+  a.head { display: block; margin-bottom: 20px; }
+  .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
+  .section img { display: none; }
+  .section h3 { margin-bottom: 5px; }
+  .ticker { display: block; }
+  @media only screen and (max-width: 600px) {
+    .section { margin-right: 0px; }
+    #nav {
+      position: fixed;
+      padding: 20px 0 20px 0;
+      margin-right: 0;
+      width: 100%%;
+      display: block;
+      top: 0;
+    }
+    #content {
+      width: 100%%;
+      display: block;
+    }
+    a.head {
+      display: inline-block;
+      margin-bottom: 0;
+    }
+    .ticker {
+      display: inline-block;
+      margin-right: 10px;
+    }
+  }
+  </style>
+</head>
+<body>
+  <div id="nav">%s</div>
+  <div id="news">%s</div>
+</body>
+</html>
+`, name, desc, nav, content)
+
+}
