@@ -207,6 +207,10 @@ func Template(name, desc, nav, content string) string {
   <meta name="description" content="%s">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
+  html, body {
+    height: 100%%;
+    width: 100%%;
+  }
   body {
 	  font-family: arial;
 	  font-size: 14px;
@@ -241,7 +245,7 @@ func Template(name, desc, nav, content string) string {
     margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
     z-index: 100;
   }
-  #content { padding-bottom: 100px; display: block; width: 70%%; margin-left: 30%%; display: inline-block; }
+  #content { padding-bottom: 100px; display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
   .head { margin-right: 10px; font-weight: bold; }
   a.head { display: block; margin-bottom: 20px; }
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
