@@ -255,7 +255,7 @@ func Template(name, desc, nav, content string) string {
     .section { margin-right: 0px; }
     #nav {
       position: fixed;
-      padding: 20px 0 20px 0;
+      padding: 20px;
       margin-right: 0;
       width: 100%%;
       display: block;
