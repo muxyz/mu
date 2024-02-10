@@ -216,7 +216,6 @@ func Template(name, desc, nav, content string) string {
 	  font-size: 14px;
 	  color: darkslategray;
 	  margin: 0 auto;
-	  padding: 20px;
 	  max-width: 1600px;
   }
   a { color: black; text-decoration: none; }
@@ -245,7 +244,7 @@ func Template(name, desc, nav, content string) string {
     margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
     z-index: 100;
   }
-  #content { padding-bottom: 100px; display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
+  #content { display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
   .head { margin-right: 10px; font-weight: bold; }
   a.head { display: block; margin-bottom: 20px; }
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
