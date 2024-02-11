@@ -240,7 +240,7 @@ func Template(name, desc, nav, content string) string {
   #info { margin-top: 5px;}
   #nav {
     position: fixed; top: 20; background: white;
-    padding: 10px 0; overflow-x: scroll; white-space: nowrap; width: 20%%;
+    padding: 10px 0; width: 20%%;
     margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
     z-index: 100;
   }
@@ -260,6 +260,7 @@ func Template(name, desc, nav, content string) string {
       width: 100%%;
       display: block;
       top: 0;
+      overflow-x: scroll; white-space: nowrap;
     }
     #content {
       width: 100%%;
