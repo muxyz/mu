@@ -257,9 +257,9 @@ func Template(name, desc, nav, content string) string {
       position: fixed;
       padding: 20px;
       margin-right: 0;
-      width: 100%%;
       display: block;
       top: 0;
+      width: calc(100vw - 40px);
       overflow-x: scroll; white-space: nowrap;
     }
     #content {
