@@ -262,6 +262,7 @@ func Template(name, desc, nav, content string) string {
       top: 0;
       width: calc(100vw - 40px);
       overflow-x: scroll; white-space: nowrap;
+      text-align: left;
     }
     #content {
       width: 100%%;
