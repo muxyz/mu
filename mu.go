@@ -243,6 +243,7 @@ func Template(name, desc, nav, content string) string {
     padding: 10px 0; width: 20%%;
     margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
     z-index: 100;
+    text-align: right;
   }
   #content { display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
   .head { margin-right: 10px; font-weight: bold; }
