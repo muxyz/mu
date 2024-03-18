@@ -265,7 +265,7 @@ func Template(name, desc, nav, content string) string {
       text-align: left;
     }
     #content {
-      width: 100%%;
+      width: auto;
       padding: 20px;
       display: block;
       margin-left: 0;
