@@ -250,7 +250,7 @@ func Template(name, desc, nav, content string) string {
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
   .section img { display: none; }
   .section h3 { margin-bottom: 5px; }
-  .ticker { display: inline-block; }
+  .ticker { display: inline-block; margin-right: 10px; }
   @media only screen and (max-width: 600px) {
     .section { margin-right: 0px; }
     #nav {
@@ -264,16 +264,13 @@ func Template(name, desc, nav, content string) string {
     }
     #content {
       width: 100%%;
+      padding: 20px;
       display: block;
       margin-left: 0;
     }
     a.head {
       display: inline-block;
       margin-bottom: 0;
-    }
-    .ticker {
-      display: inline-block;
-      margin-right: 10px;
     }
   }
   </style>
