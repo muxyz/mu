@@ -249,6 +249,7 @@ func Template(name, desc, nav, content string) string {
     padding: 10px 0; width: 20%%;
     margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
     z-index: 100;
+    text-align: right;
   }
   #content { display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
   #logo > img { width: 40px; height: auto; }
@@ -257,7 +258,7 @@ func Template(name, desc, nav, content string) string {
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
   .section img { display: none; }
   .section h3 { margin-bottom: 5px; }
-  .ticker { display: block; }
+  .ticker { display: inline-block; margin-right: 10px; }
   @media only screen and (max-width: 600px) {
     .section { margin-right: 0px; }
     #nav {
@@ -268,19 +269,17 @@ func Template(name, desc, nav, content string) string {
       top: 0;
       width: calc(100vw - 40px);
       overflow-x: scroll; white-space: nowrap;
+      text-align: left;
     }
     #content {
-      width: 100%%;
+      width: auto;
+      padding: 20px;
       display: block;
       margin-left: 0;
     }
     a.head {
       display: inline-block;
       margin-bottom: 0;
-    }
-    .ticker {
-      display: inline-block;
-      margin-right: 10px;
     }
   }
   </style>
