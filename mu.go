@@ -286,7 +286,7 @@ func Template(name, desc, nav, content string) string {
 </head>
 <body>
   <div id="nav">
-    <div id="logo"><a href="/"><img src="/assets/mu.png"></a></div>
+    <div id="logo"><a href="/"><img height="40px" src="/assets/mu.png"></a></div>
     %s
   </div>
   <div id="content">%s</div>
