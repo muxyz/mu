@@ -4,15 +4,21 @@ import (
 	"crypto/aes"
 	"crypto/cipher"
 	"crypto/rand"
+	"embed"
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
 	"io"
 	"math"
+	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"time"
 )
+
+//go:embed assets/*
+var assets embed.FS
 
 // user home dir
 var Home string
@@ -245,6 +251,7 @@ func Template(name, desc, nav, content string) string {
     z-index: 100;
   }
   #content { display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
+  #logo > img { width: 40px; height: auto; }
   .head { margin-right: 10px; font-weight: bold; }
   a.head { display: block; margin-bottom: 20px; }
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
@@ -279,10 +286,25 @@ func Template(name, desc, nav, content string) string {
   </style>
 </head>
 <body>
-  <div id="nav">%s</div>
+  <div id="nav">
+    <div id="logo"><a href="/"><img src="/assets/mu.png"></a></div>
+    %s
+  </div>
   <div id="content">%s</div>
 </body>
 </html>
 `, name, desc, nav, content)
 
+}
+
+func Serve(port int) error {
+	http.Handle("/assets/", http.FileServer(http.FS(assets)))
+
+	if v := os.Getenv("PORT"); len(v) > 0 {
+		port, _ = strconv.Atoi(v)
+	}
+
+	addr := fmt.Sprintf(":%d", port)
+
+	return http.ListenAndServe(addr, nil)
 }
