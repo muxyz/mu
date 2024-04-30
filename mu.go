@@ -253,6 +253,7 @@ func Template(name, desc, nav, content string) string {
   }
   #content { display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
   #logo > img { width: 40px; height: auto; }
+  #logo { margin-bottom: 10px; }
   .head { margin-right: 10px; font-weight: bold; }
   a.head { display: block; margin-bottom: 20px; }
   .section { display: block; max-width: 600px; margin-right: 20px; vertical-align: top;}
@@ -280,6 +281,12 @@ func Template(name, desc, nav, content string) string {
     a.head {
       display: inline-block;
       margin-bottom: 0;
+    }
+    #logo {
+      margin-right: 10px;
+      margin-bottom: 0;
+      display: inline-block;
+      vertical-align: middle;
     }
   }
   </style>
