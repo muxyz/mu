@@ -1,6 +1,6 @@
 # mu
 
-A Go app platform
+A Micro app platform
 
 ## Overview
 
