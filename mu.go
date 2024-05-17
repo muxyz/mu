@@ -9,6 +9,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"io/fs"
 	"math"
 	"net/http"
 	"os"
@@ -17,8 +18,8 @@ import (
 	"time"
 )
 
-//go:embed assets/*
-var assets embed.FS
+//go:embed html/*
+var html embed.FS
 
 // user home dir
 var Home string
@@ -304,7 +305,9 @@ func Template(name, desc, nav, content string) string {
 }
 
 func Serve(port int) error {
-	http.Handle("/assets/", http.FileServer(http.FS(assets)))
+	sub, _ := fs.Sub(html, "html")
+
+	http.Handle("/assets/", http.FileServer(http.FS(sub)))
 
 	if v := os.Getenv("PORT"); len(v) > 0 {
 		port, _ = strconv.Atoi(v)
