@@ -62,3 +62,7 @@ export CRYPTO_API_KEY=xxx
 Mu operates as a progressive web app. The main home app can be installed just like a native app. 
 
 Caching and offline mode is still a WIP.
+
+## Development
+
+Currently hacking on this for personal reasons. Join [Discord](https://mu.xyz/discord) if interested.
