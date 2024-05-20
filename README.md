@@ -4,11 +4,19 @@ A Micro app platform
 
 ## Overview
 
-Mu is an app platform that provides some simple help around Go app development. It looks to be a non intrusive and easy way to extend existing workflows. 
+Mu is an app platform that provides a simple set of building blocks for life.
+
+The current apps
+
+- Chat - Channel based AI chat
+- News - Topic based news feed
+- Pray - Islamic prayer times
+- Reminder - The Quran in English
 
 ## Dependencies
 
 - Go toolchain
+- OpenAI API key
 
 ## Setup
 
@@ -18,50 +26,28 @@ go install mu.dev/cmd/mu@latest
 
 ## Usage
 
-Build a binary
+Set `OPENAI_API_KEY`
 
-```bash
-mu build [source]
 ```
-
-List binaries
-
-```bash
-mu list
-```
-
-Run an app
-
-```bash
-mu run [app]
-```
-
-### Examples
-
-Build the binary
-```bash
-$ mu build ../news
-Building news
-Built /home/asim/mu/bin/news
-```
-
-Check it exists
-
-```bash
-$ mu list
-news
+export OPENAI_API_KEY=xxx
 ```
 
 Run it
+
 ```
-$ mu run news
+mu
 ```
 
-Run from source
+## APIs
 
-```bash
-$ mu run .
-Building news
-Built /home/asim/mu/bin/news
-Running news
+Set `SUNNAH_API_KEY` from `sunnah.com` for daily hadith in news app
+
+```
+export SUNNAH_API_KEY=xxx
+```
+
+Set `CRYPTO_API_KEY` from `cryptocompare.com` for crypto market tickers
+
+```
+export CRYPTO_API_KEY=xxx
 ```

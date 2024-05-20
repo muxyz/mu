@@ -307,7 +307,7 @@ func Template(name, desc, nav, content string) string {
 func Serve(port int) error {
 	sub, _ := fs.Sub(html, "html")
 
-	http.Handle("/assets/", http.FileServer(http.FS(sub)))
+	http.Handle("/", http.FileServer(http.FS(sub)))
 
 	if v := os.Getenv("PORT"); len(v) > 0 {
 		port, _ = strconv.Atoi(v)
