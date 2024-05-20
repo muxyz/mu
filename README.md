@@ -13,10 +13,10 @@ hacker news, open source, crypto.
 
 The current list of apps:
 
-- Chat - Channel based AI chat
-- News - Topic based news feed
-- Pray - Islamic prayer times
-- Reminder - The Quran in English
+- **Chat** - Channel based AI chat
+- **News** - Topic based news feed
+- **Pray** - Islamic prayer times
+- **Reminder** - The Quran in English
 
 ## Dependencies
 
