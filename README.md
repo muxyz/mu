@@ -6,7 +6,7 @@ A Micro app platform
 
 Mu is an app platform that provides a simple set of building blocks for life.
 
-The current apps
+The current list of apps:
 
 - Chat - Channel based AI chat
 - News - Topic based news feed
@@ -39,6 +39,12 @@ mu
 ```
 
 ## APIs
+
+Set `OPENAI_API_KEY` from `openai.com` for ability to chat with AI
+
+```
+export OPENAI_API_KEY=xxx
+```
 
 Set `SUNNAH_API_KEY` from `sunnah.com` for daily hadith in news app
 
