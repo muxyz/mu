@@ -51,3 +51,7 @@ Set `CRYPTO_API_KEY` from `cryptocompare.com` for crypto market tickers
 ```
 export CRYPTO_API_KEY=xxx
 ```
+
+## PWA
+
+Mu operates as a progressive web app. The main home app can be installed just like a native app. Caching is still a WIP.
