@@ -54,4 +54,6 @@ export CRYPTO_API_KEY=xxx
 
 ## PWA
 
-Mu operates as a progressive web app. The main home app can be installed just like a native app. Caching is still a WIP.
+Mu operates as a progressive web app. The main home app can be installed just like a native app. 
+
+Caching and offline mode is still a WIP.
