@@ -18,18 +18,12 @@ The current list of apps:
 - Go toolchain
 - OpenAI API key
 
-## Setup
+## Usage
+
+Download source
 
 ```bash
 go install mu.dev/cmd/mu@latest
-```
-
-## Usage
-
-Set `OPENAI_API_KEY`
-
-```
-export OPENAI_API_KEY=xxx
 ```
 
 Run it
