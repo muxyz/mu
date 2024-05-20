@@ -193,7 +193,6 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
        }
        .mu {
          background: #F8F8F8;
-	 border: 1px solid #cccccc;
 	 border-radius: 10px;
        }
        @media only screen and (max-width: 600px) {
