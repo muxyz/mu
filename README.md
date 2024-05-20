@@ -16,7 +16,6 @@ The current list of apps:
 ## Dependencies
 
 - Go toolchain
-- OpenAI API key
 
 ## Usage
 
