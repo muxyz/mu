@@ -32,6 +32,7 @@ Run it
 mu
 ```
 
+Goto `localhost:8080`
 ## APIs
 
 Set `OPENAI_API_KEY` from `openai.com` for ability to chat with AI
