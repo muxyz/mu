@@ -160,7 +160,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	nav := `
-	&nbsp;
 	<a href="#1" class=head>The Opening</a>
 	<a href="#2:255" class=head>The Throne</a>
 	<a href="#112" class=head>Sincerity</a>

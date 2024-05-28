@@ -46,8 +46,9 @@ type City struct {
 
 var cities = []City{
 	City{Name: "London", Lat: 51.41334, Lon: -0.36701, Location: "Europe/London"},
-	City{Name: "Doha", Lat: 25.286106, Lon: 51.534817, Location: "Asia/Qatar"},
+	City{Name: "Edinburgh", Lat: 55.9425285, Lon: -3.295193, Location: "Europe/London"},
 	City{Name: "Mecca", Lat: 21.422487, Lon: 39.826206, Location: "Asia/Riyadh"},
+	City{Name: "Doha", Lat: 25.286106, Lon: 51.534817, Location: "Asia/Qatar"},
 	City{Name: "New York", Lat: 40.730610, Lon: -73.935242, Location: "America/New_York"},
 	City{Name: "Sydney", Lat: -33.865143, Lon: 151.209900, Location: "Australia/Sydney"},
 	City{Name: "Tokyo", Lat: 35.672855, Lon: 139.817413, Location: "Asia/Tokyo"},

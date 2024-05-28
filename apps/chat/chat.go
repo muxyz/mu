@@ -273,6 +273,9 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
       var el = document.querySelectorAll('#nav a');
       for (let i = 0; i < el.length; i++) {
+	if el[i].href == "/" {
+	  continue;
+	}
         el[i].className = 'head';
         if (el[i].href.endsWith('#' + hash)) {
           el[i].className = 'highlight head';
