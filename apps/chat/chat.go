@@ -273,7 +273,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
       var el = document.querySelectorAll('#nav a');
       for (let i = 0; i < el.length; i++) {
-	if el[i].href == "/" {
+	if (el[i].href == "/") {
 	  continue;
 	}
         el[i].className = 'head';
