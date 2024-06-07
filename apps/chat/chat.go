@@ -411,7 +411,7 @@ func promptHandler(w http.ResponseWriter, r *http.Request) {
 
 func load() {
 	mutex.Lock()
-	mu.Load(&channels, "chat.enc")
+	mu.Load(&channels, "chat.enc", true)
 	mutex.Unlock()
 }
 
@@ -420,7 +420,7 @@ func save() {
 		select {
 		case <-updates:
 			mutex.RLock()
-			mu.Save(channels, "chat.enc")
+			mu.Save(channels, "chat.enc", true)
 			mutex.RUnlock()
 		}
 	}

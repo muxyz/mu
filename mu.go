@@ -138,23 +138,26 @@ func decrypt(encryptedString string, keyString string) (decryptedString string) 
 	return fmt.Sprintf("%s", plaintext)
 }
 
-func save(data interface{}, file, key string) error {
+func save(val interface{}, file, key string, encrypted bool) error {
 	cache := filepath.Join(Cache, file)
 
 	// encode data
-	b, err := json.Marshal(data)
+	data, err := json.Marshal(val)
 	if err != nil {
 		return err
 	}
 
 	// encrypt it
-	e := encrypt(string(b), Key)
+	if encrypted {
+		enc := encrypt(string(data), Key)
+		data = []byte(enc)
+	}
 
 	// write the data
-	return os.WriteFile(cache, []byte(e), 0644)
+	return os.WriteFile(cache, data, 0644)
 }
 
-func load(data interface{}, file, key string) error {
+func load(v interface{}, file, key string, encrypted bool) error {
 	cache := filepath.Join(Cache, file)
 
 	_, err := os.Stat(cache)
@@ -163,18 +166,21 @@ func load(data interface{}, file, key string) error {
 	}
 
 	// file exists
-	b, err := os.ReadFile(cache)
+	data, err := os.ReadFile(cache)
 	if err != nil {
 		return err
 	}
 
-	if len(b) == 0 {
+	if len(data) == 0 {
 		return nil
 	}
 
-	d := decrypt(string(b), Key)
+	if encrypted {
+		val := decrypt(string(data), Key)
+		data = []byte(val)
+	}
 
-	return json.Unmarshal([]byte(d), data)
+	return json.Unmarshal(data, v)
 }
 
 // Backoff is for exponential backoff
@@ -196,13 +202,13 @@ func Decrypt(text string) string {
 }
 
 // Save data to the cache
-func Save(data interface{}, file string) error {
-	return save(data, file, Key)
+func Save(data interface{}, file string, encrypt bool) error {
+	return save(data, file, Key, encrypt)
 }
 
 // Load data from cache
-func Load(data interface{}, file string) error {
-	return load(data, file, Key)
+func Load(data interface{}, file string, decrypt bool) error {
+	return load(data, file, Key, decrypt)
 }
 
 // The standard HTML template
