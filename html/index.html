@@ -24,28 +24,30 @@
 	
 	<p id="description">Mu is a new app studio. We provide the building blocks for life as easy to use Micro apps.</p>
 	
-  <div class="apps">
-    <a href="/chat">
-      <button>
-        Chat
-      </button>
-    </a>
-    <a href="/news">
-      <button>
-        News
-      </button>
-    </a>
-    <a href="/pray">
-      <button>
-        Pray
-      </button>
-    </a>
-    <a href="/reminder">
-      <button>
-        Reminder
-      </button>
-    </a>
-  </div>
+	  <div class="apps">
+	    <a href="/chat">
+	      <button>
+		Chat
+	      </button>
+	    </a>
+	    <a href="/news">
+	      <button>
+		News
+	      </button>
+	    </a>
+	    <a href="/pray">
+	      <button>
+		Pray
+	      </button>
+	    </a>
+	    <a href="/reminder">
+	      <button>
+		Reminder
+	      </button>
+	    </a>
+	  </div>
+
+	  <button id="install" hidden>Install</button>
     </div>
 
   <script>
@@ -55,6 +57,40 @@
           {scope: '/'}
         )
       }
+  </script>
+  <script>
+	let installPrompt = null;
+	const installButton = document.querySelector("#install");
+
+	window.addEventListener("beforeinstallprompt", (event) => {
+	  event.preventDefault();
+	  installPrompt = event;
+	  installButton.removeAttribute("hidden");
+	});
+
+	installButton.addEventListener("click", async () => {
+	  if (!installPrompt) {
+	    return;
+	  }
+	  const result = await installPrompt.prompt();
+	  console.log(`Install prompt was: ${result.outcome}`);
+	  disableInAppInstallPrompt();
+	});
+
+	function disableInAppInstallPrompt() {
+	  installPrompt = null;
+	  installButton.setAttribute("hidden", "");
+	}
+
+	window.addEventListener("appinstalled", () => {
+	  disableInAppInstallPrompt();
+	});
+
+	function disableInAppInstallPrompt() {
+	  installPrompt = null;
+	  installButton.setAttribute("hidden", "");
+	}
+
   </script>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JF0MG43KYV"></script>
