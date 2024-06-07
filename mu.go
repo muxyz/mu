@@ -16,6 +16,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 //go:embed html/*
@@ -191,6 +193,11 @@ func Backoff(attempts int) time.Duration {
 	return time.Duration(math.Pow(float64(attempts), math.E)) * time.Millisecond * 100
 }
 
+// ID generates a new uuid
+func ID() string {
+	return uuid.New().String()
+}
+
 // Encrypt text using AES-256 and secret key
 func Encrypt(text string) string {
 	return encrypt(text, Key)
@@ -219,15 +226,11 @@ func Template(name, desc, nav, content string) string {
   <title>%s | Mu</title>
   <meta name="description" content="%s">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/mu.css">
   <style>
-  html, body {
-    height: 100%%;
-    width: 100%%;
-  }
   body {
 	  font-family: arial;
 	  font-size: 14px;
-	  color: darkslategray;
 	  margin: 0 auto;
 	  max-width: 1600px;
   }
@@ -252,14 +255,16 @@ func Template(name, desc, nav, content string) string {
   }
   #info { margin-top: 5px;}
   #nav {
-    position: fixed; top: 20; background: white;
-    padding: 10px 0; width: 20%%;
-    margin-right: 50px; padding-top: 100px; vertical-align: top; display: inline-block;
+    position: fixed; background: white;
+    padding: 25px;
+    width: 20%%;
+    margin-right: 50px;
+    padding-top: 100px;
+    vertical-align: top;
+    display: inline-block;
     z-index: 100;
-    text-align: right;
   }
   #content { display: block; height: 100%%; width: 70%%; margin-left: 30%%; display: inline-block; }
-  #logo > img { width: 40px; height: auto; }
   #logo { margin-bottom: 25px; }
   .head { margin-right: 10px; font-weight: bold; }
   a.head { display: block; margin-bottom: 20px; }
@@ -274,7 +279,6 @@ func Template(name, desc, nav, content string) string {
       padding: 20px;
       margin-right: 0;
       display: block;
-      top: 0;
       width: calc(100vw - 40px);
       overflow-x: scroll; white-space: nowrap;
       text-align: left;
@@ -300,7 +304,7 @@ func Template(name, desc, nav, content string) string {
 </head>
 <body>
   <div id="nav">
-    <div id="logo"><a href="/"><img height="40px" src="/assets/mu.png"></a></div>
+    <div id="logo"><a href="/"><img height=40px width=auto src="/assets/mu.png"></a></div>
     %s
   </div>
   <div id="content">%s</div>
@@ -313,7 +317,18 @@ func Template(name, desc, nav, content string) string {
 func Serve(port int) error {
 	sub, _ := fs.Sub(html, "html")
 
-	http.Handle("/", http.FileServer(http.FS(sub)))
+	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		if r.URL.Path == "/" {
+			// logged in
+			sess, err := r.Cookie("sess")
+			if err == nil && len(sess.Value) > 0 {
+				http.Redirect(w, r, "/home", 302)
+				return
+			}
+		}
+
+		http.FileServer(http.FS(sub)).ServeHTTP(w, r)
+	})
 
 	if v := os.Getenv("PORT"); len(v) > 0 {
 		port, _ = strconv.Atoi(v)

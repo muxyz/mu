@@ -4,10 +4,12 @@ import (
 	"net/http"
 
 	"mu.dev"
-	"mu.dev/apps/chat"
-	"mu.dev/apps/news"
-	"mu.dev/apps/pray"
-	"mu.dev/apps/reminder"
+	"mu.dev/chat"
+	"mu.dev/home"
+	"mu.dev/news"
+	"mu.dev/pray"
+	"mu.dev/reminder"
+	"mu.dev/user"
 )
 
 func main() {
@@ -17,9 +19,11 @@ Allow: /`))
 	})
 
 	chat.Register()
+	home.Register()
 	news.Register()
 	pray.Register()
 	reminder.Register()
+	user.Register()
 
 	mu.Serve(8080)
 }

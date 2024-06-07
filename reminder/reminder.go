@@ -18,13 +18,13 @@ var Source = "https://api.alquran.cloud/v1/quran/en.sahih"
 var HTML string
 
 func load() {
-	if err := mu.Load(&HTML, "quran.html"); err == nil {
+	if err := mu.Load(&HTML, "quran.html", false); err == nil {
 		return
 	}
 
-	if err := mu.Load(&Quran, "quran.dev"); err == nil {
+	if err := mu.Load(&Quran, "quran.dev", false); err == nil {
 		HTML = html()
-		mu.Save(HTML, "quran.html")
+		mu.Save(HTML, "quran.html", false)
 		return
 	}
 
@@ -63,13 +63,13 @@ func load() {
 	fmt.Println("Saving to cache")
 
 	// save it it
-	if err := mu.Save(Quran, "quran.dev"); err != nil {
+	if err := mu.Save(Quran, "quran.dev", false); err != nil {
 		panic(err.Error())
 	}
 
 	// save html
 	HTML = html()
-	mu.Save(HTML, "quran.html")
+	mu.Save(HTML, "quran.html", false)
 }
 
 var html = func() string {
