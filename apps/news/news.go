@@ -340,7 +340,7 @@ func parseFeed() {
 	// get hadith
 	hadith := getSunnah()
 	if len(hadith) > 0 {
-		headline = append(headline, []byte(fmt.Sprintf(`<div id="hadith"><h3>Hadith</h3>%s</div>`, hadith))...)
+		headline = append(headline, []byte(fmt.Sprintf(`<div id="hadith"><h1>Hadith</h1>%s</div>`, hadith))...)
 	}
 
 	// get crypto prices
@@ -353,7 +353,7 @@ func parseFeed() {
 		sol := prices["SOL"]
 
 		var info []byte
-		info = append(info, []byte(`<div id="info"><h3>Markets</h3>`)...)
+		info = append(info, []byte(`<div id="info"><h1>Markets</h1>`)...)
 		info = append(info, []byte(`<span class="ticker">btc $`+btc+`</span>`)...)
 		info = append(info, []byte(`<span class="ticker">eth $`+eth+`</span>`)...)
 		info = append(info, []byte(`<span class="ticker">bnb $`+bnb+`</span>`)...)
