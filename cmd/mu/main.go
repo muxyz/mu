@@ -10,6 +10,7 @@ import (
 	"mu.dev/pray"
 	"mu.dev/reminder"
 	"mu.dev/user"
+	"mu.dev/watch"
 )
 
 func main() {
@@ -24,6 +25,7 @@ Allow: /`))
 	pray.Register()
 	reminder.Register()
 	user.Register()
+	watch.Register()
 
 	mu.Serve(8080)
 }

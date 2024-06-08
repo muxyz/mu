@@ -12,6 +12,9 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 #title {
   margin-top: 100px;
 }
+.apps a {
+  margin-right: 10px;
+}
 </style>
           <h1 id="title">Home</h1>
           <p id="description"></p>
@@ -35,6 +38,11 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	    <a href="/reminder">
 	      <button>
 		Reminder
+	      </button>
+	    </a>
+	    <a href="/watch">
+	      <button>
+		Watch
 	      </button>
 	    </a>
 	  </div>
