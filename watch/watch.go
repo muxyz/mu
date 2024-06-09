@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"mu.dev"
 	"net/http"
+	"net/url"
 	"os"
+	"sort"
 	"strings"
+	"sync"
 	"time"
 
 	"google.golang.org/api/option"
@@ -16,44 +19,77 @@ import (
 var Key = os.Getenv("YOUTUBE_API_KEY")
 var Client, _ = youtube.NewService(context.TODO(), option.WithAPIKey(Key))
 
-func watchHandler(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		// search request
-		r.ParseForm()
-		q := r.Form.Get("q")
+var mutex sync.Mutex
+var Recent = map[string]string{}
 
-		resp, err := Client.Search.List([]string{"id", "snippet"}).Q(q).MaxResults(25).Do()
-		if err != nil {
-			http.Error(w, err.Error(), 500)
-			return
+func init() {
+	mu.Load(&Recent, "recent.json", false)
+}
+
+func getResults(q string) (string, error) {
+	resp, err := Client.Search.List([]string{"id", "snippet"}).Q(q).MaxResults(25).Do()
+	if err != nil {
+		return "", err
+	}
+
+	var results string
+
+	for _, item := range resp.Items {
+		var id, url, desc string
+		kind := strings.Split(item.Id.Kind, "#")[1]
+		t, _ := time.Parse(time.RFC3339, item.Snippet.PublishedAt)
+		desc = fmt.Sprintf(`[%s] published on %s`, kind, t.Format(time.RFC822))
+		switch kind {
+		case "video":
+			id = item.Id.VideoId
+			url = "https://www.youtube.com/watch?v=" + id
+		case "playlist":
+			id = item.Id.PlaylistId
+			url = "https://www.youtube.com/playlist?list=" + id
+		case "channel":
+			id = item.Id.ChannelId
+			url = "https://www.youtube.com/channel/" + id
+			desc = "[channel]"
 		}
+		channel := fmt.Sprintf(`<a href="https://youtube.com/channel/%s">%s</a>`, item.Snippet.ChannelId, item.Snippet.ChannelTitle)
+		results += fmt.Sprintf(`
+			<div class="video"><a href="%s"><img src="%s"><h3>%s</h3></a>%s | %s</div>`,
+			url, item.Snippet.Thumbnails.Medium.Url, item.Snippet.Title, channel, desc)
+	}
 
-		var results string
+	return results, nil
+}
 
-		for _, item := range resp.Items {
-			var id, url, desc string
-			kind := strings.Split(item.Id.Kind, "#")[1]
-			t, _ := time.Parse(time.RFC3339, item.Snippet.PublishedAt)
-			desc = fmt.Sprintf(`[%s] published on %s`, kind, t.Format(time.RFC822))
-			switch kind {
-			case "video":
-				id = item.Id.VideoId
-				url = "https://www.youtube.com/watch?v=" + id
-			case "playlist":
-				id = item.Id.PlaylistId
-				url = "https://www.youtube.com/playlist?list=" + id
-			case "channel":
-				id = item.Id.ChannelId
-				url = "https://www.youtube.com/channel/" + id
-				desc = "[channel]"
-			}
-			channel := fmt.Sprintf(`<a href="https://youtube.com/channel/%s">%s</a>`, item.Snippet.ChannelId, item.Snippet.ChannelTitle)
-			results += fmt.Sprintf(`
-				<div class="video"><a href="%s"><img src="%s"><h3>%s</h3></a>%s | %s</div>`,
-				url, item.Snippet.Thumbnails.Medium.Url, item.Snippet.Title, channel, desc)
+func makeNav() string {
+	// build the nav
+	var nav string
+	var i int
+
+	mutex.Lock()
+
+	var keys []string
+
+	for k, _ := range Recent {
+		keys = append(keys, k)
+	}
+
+	sort.Strings(keys)
+
+	for _, k := range keys {
+		nav += fmt.Sprintf(`<a class="head" href="/watch?q=%s">%s</a>`, url.QueryEscape(k), k)
+		i++
+
+		if i > 10 {
+			break
 		}
+	}
 
-		html := mu.Template("Watch", "Results", "", fmt.Sprintf(`
+	mutex.Unlock()
+
+	return nav
+}
+
+var Results = `
 <style>
   form {
     margin-top: 100px;
@@ -69,18 +105,15 @@ func watchHandler(w http.ResponseWriter, r *http.Request) {
   }
 </style>
 <form action="/watch" method="POST">
-  <input name="q" id="q" placeholder=Search>
+  <input name="q" id="q" value="%s">
   <button>Submit</button>
 </form>
 <h1>Results</h1>
 <div id="results">
 %s
-</div>`, results))
-		w.Write([]byte(html))
-		return
-	}
+</div>`
 
-	html := mu.Template("Watch", "Watch YouTube Videos", "", `
+var Template = `
 <style>
 form {
   margin-top: 100px;
@@ -89,7 +122,59 @@ form {
 <form action="/watch" method="POST">
   <input name="q" id="q" placeholder=Search>
   <button>Submit</button>
-</form>`)
+</form>`
+
+func watchHandler(w http.ResponseWriter, r *http.Request) {
+	r.ParseForm()
+	q := r.Form.Get("q")
+
+	if r.Method == "POST" {
+		// check recent cache
+		mutex.Lock()
+		results, ok := Recent[q]
+		mutex.Unlock()
+
+		if !ok {
+			var err error
+
+			// fetch results from api
+			results, err = getResults(q)
+			if err != nil {
+				http.Error(w, err.Error(), 500)
+				return
+			}
+
+			// recent queries
+			mutex.Lock()
+			Recent[q] = results
+			mu.Save(Recent, "recent.json", false)
+			mutex.Unlock()
+
+		}
+
+		nav := makeNav()
+
+		html := mu.Template("Watch", q+" | Results", nav, fmt.Sprintf(Results, q, results))
+		w.Write([]byte(html))
+		return
+	}
+
+	// GET
+	// check recent cache
+	mutex.Lock()
+	results, ok := Recent[q]
+	mutex.Unlock()
+
+	var content string
+
+	if ok {
+		content = fmt.Sprintf(Results, q, results)
+	} else {
+		content = Template
+	}
+
+	nav := makeNav()
+	html := mu.Template("Watch", "Watch YouTube Videos", nav, content)
 
 	w.Write([]byte(html))
 }
