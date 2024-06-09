@@ -131,13 +131,15 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.SetCookie(w, &http.Cookie{
-			Name:  "sess",
-			Value: sess.ID,
+			Name:    "sess",
+			Value:   sess.ID,
+			Expires: time.Now().Add(time.Hour * 24 * 30),
 		})
 
 		http.SetCookie(w, &http.Cookie{
-			Name:  "user",
-			Value: acc.Username,
+			Name:    "user",
+			Value:   acc.Username,
+			Expires: time.Now().Add(time.Hour * 24 * 30),
 		})
 
 		http.Redirect(w, r, "/home", 302)
@@ -184,13 +186,15 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 		}
 
 		http.SetCookie(w, &http.Cookie{
-			Name:  "sess",
-			Value: sess.ID,
+			Name:    "sess",
+			Value:   sess.ID,
+			Expires: time.Now().Add(time.Hour * 24 * 30),
 		})
 
 		http.SetCookie(w, &http.Cookie{
-			Name:  "user",
-			Value: acc.Username,
+			Name:    "user",
+			Value:   acc.Username,
+			Expires: time.Now().Add(time.Hour * 24 * 30),
 		})
 
 		http.Redirect(w, r, "/home", 302)
