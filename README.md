@@ -12,11 +12,12 @@ hacker news, open source, crypto.
 
 The current list of apps:
 
-- **Chat** - Channel based AI chat
-- **News** - Topic based news feed
+- **Chat** - General knowledge AI
+- **News** - News headlines and market data
 - **Pray** - Islamic prayer times
-- **Reminder** - The Quran in English
-
+- **Reminder** - The holy Quran in English
+- **Watch** - Watch YouTube videos
+  
 ## Dependencies
 
 - Go toolchain
