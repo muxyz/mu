@@ -57,6 +57,12 @@ Set `CRYPTO_API_KEY` from `cryptocompare.com` for crypto market tickers
 export CRYPTO_API_KEY=xxx
 ```
 
+Set `YOUTUBE_API_KEY` from [Google Cloud](https://console.cloud.google.com/apis/api/youtube.googleapis.com/credentials) for YouTube data
+
+```
+export YOUTUBE_API_KEY
+```
+
 ## PWA
 
 Mu operates as a progressive web app. The main app can be installed just like a native app. 
