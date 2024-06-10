@@ -71,4 +71,4 @@ Caching and offline mode is still a WIP.
 
 ## Development
 
-Currently hacking on this for personal reasons. Join [Discord](https://mu.xyz/discord) if interested.
+Join [Discord](https://mu.xyz/discord) if interested.
