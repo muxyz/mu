@@ -26,6 +26,12 @@ func init() {
 	mu.Load(&Recent, "recent.json", false)
 }
 
+func embedVideo(id string) string {
+	u := "https://www.youtube.com/embed/" + id
+	style := `style="position: absolute; top: 0; left: 0; right: 0; width: 100%; height: 100%; border: none;"`
+	return `<iframe width="560" height="315" ` + style + ` src="` + u + `" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`
+}
+
 func getResults(q string) (string, error) {
 	resp, err := Client.Search.List([]string{"id", "snippet"}).Q(q).MaxResults(25).Do()
 	if err != nil {
@@ -42,10 +48,10 @@ func getResults(q string) (string, error) {
 		switch kind {
 		case "video":
 			id = item.Id.VideoId
-			url = "https://www.youtube.com/watch?v=" + id
+			url = "/watch?id=" + id
 		case "playlist":
 			id = item.Id.PlaylistId
-			url = "https://www.youtube.com/playlist?list=" + id
+			url = "/watch?id=" + id
 		case "channel":
 			id = item.Id.ChannelId
 			url = "https://www.youtube.com/channel/" + id
@@ -53,7 +59,7 @@ func getResults(q string) (string, error) {
 		}
 		channel := fmt.Sprintf(`<a href="https://youtube.com/channel/%s">%s</a>`, item.Snippet.ChannelId, item.Snippet.ChannelTitle)
 		results += fmt.Sprintf(`
-			<div class="video"><a href="%s"><img src="%s"><h3>%s</h3></a>%s | %s</div>`,
+			<div class="thumbnail"><a href="%s"><img src="%s"><h3>%s</h3></a>%s | %s</div>`,
 			url, item.Snippet.Thumbnails.Medium.Url, item.Snippet.Title, channel, desc)
 	}
 
@@ -94,7 +100,7 @@ var Results = `
   form {
     margin-top: 100px;
   }
-  .video {
+  .thumbnail {
     margin-bottom: 50px;
   }
   img {
@@ -117,6 +123,12 @@ var Template = `
 <style>
 form {
   margin-top: 100px;
+}
+.video {
+  width: 100%;
+  overflow: hidden;
+  padding-top: 56.25%;
+  position: relative;
 }
 </style>
 <form action="/watch" method="POST">
@@ -159,6 +171,17 @@ func watchHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	id := r.Form.Get("id")
+	nav := makeNav()
+
+	// render watch page
+	if len(id) > 0 {
+		// get the page
+		html := fmt.Sprintf(`<html><body><div class="video" style="padding-top: 100px">%s</div></body></html>`, embedVideo(id))
+		w.Write([]byte(html))
+		return
+	}
+
 	// GET
 	// check recent cache
 	mutex.Lock()
@@ -173,7 +196,6 @@ func watchHandler(w http.ResponseWriter, r *http.Request) {
 		content = Template
 	}
 
-	nav := makeNav()
 	html := mu.Template("Watch", "Watch YouTube Videos", nav, content)
 
 	w.Write([]byte(html))
