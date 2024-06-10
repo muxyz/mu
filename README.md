@@ -12,7 +12,7 @@ hacker news, open source, crypto.
 
 The current list of apps:
 
-- **Chat** - General knowledge AI
+- **Chat** - General knowledge AI chat
 - **News** - News headlines and market data
 - **Pray** - Islamic prayer times
 - **Reminder** - The holy Quran in English
