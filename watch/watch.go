@@ -51,7 +51,7 @@ func getResults(q string) (string, error) {
 			url = "/watch?id=" + id
 		case "playlist":
 			id = item.Id.PlaylistId
-			url = "/watch?id=" + id
+			url = "https://youtube.com/playlist?list=" + id
 		case "channel":
 			id = item.Id.ChannelId
 			url = "https://www.youtube.com/channel/" + id
