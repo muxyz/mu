@@ -72,3 +72,7 @@ Caching and offline mode is still a WIP.
 ## Development
 
 Join [Discord](https://mu.xyz/discord) if interested.
+
+## Live
+
+Go to [https://mu.xyz](https://mu.xyz) to use the app.
