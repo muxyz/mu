@@ -19,6 +19,35 @@ func main() {
 Allow: /`))
 	})
 
+	// chat
+	http.HandleFunc("/chat", user.Auth(chat.IndexHandler))
+	http.HandleFunc("/chat/prompt", user.Auth(chat.PromptHandler))
+	http.HandleFunc("/chat/channels", user.Auth(chat.ChannelHandler))
+
+	// home
+	http.HandleFunc("/home", user.Auth(home.IndexHandler))
+
+	// news
+	http.HandleFunc("/news", user.Auth(news.IndexHandler))
+	http.HandleFunc("/news/feeds", user.Auth(news.FeedsHandler))
+	http.HandleFunc("/news/status", user.Auth(news.StatusHandler))
+	// http.HandleFunc("/add", addHandler)
+
+	// pray
+	http.HandleFunc("/pray", user.Auth(pray.IndexHandler))
+
+	// reminder
+	http.HandleFunc("/reminder", user.Auth(reminder.IndexHandler))
+
+	// user
+	http.HandleFunc("/login", user.LoginHandler)
+	http.HandleFunc("/logout", user.LogoutHandler)
+	http.HandleFunc("/signup", user.SignupHandler)
+
+	// watch
+	http.HandleFunc("/watch", user.Auth(watch.WatchHandler))
+
+	// any other stuff
 	chat.Register()
 	home.Register()
 	news.Register()

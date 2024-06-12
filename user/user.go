@@ -119,7 +119,7 @@ func Verify(sessID, user string) error {
 	return nil
 }
 
-func loginHandler(w http.ResponseWriter, r *http.Request) {
+func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		r.ParseForm()
 		user := r.Form.Get("username")
@@ -168,7 +168,7 @@ func loginHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(html))
 }
 
-func signupHandler(w http.ResponseWriter, r *http.Request) {
+func SignupHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		r.ParseForm()
 		user := r.Form.Get("username")
@@ -223,7 +223,7 @@ func signupHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(html))
 }
 
-func logoutHandler(w http.ResponseWriter, r *http.Request) {
+func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 	http.SetCookie(w, &http.Cookie{
 		Name:   "sess",
 		MaxAge: -1,
@@ -235,8 +235,31 @@ func logoutHandler(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, "/", 302)
 }
 
-func Register() {
-	http.HandleFunc("/login", loginHandler)
-	http.HandleFunc("/logout", logoutHandler)
-	http.HandleFunc("/signup", signupHandler)
+func Register() {}
+
+// Authenticated handler
+func Auth(h http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		// check the session cookie exists
+		c, err := r.Cookie("sess")
+		if err != nil || len(c.Value) == 0 {
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+		// check the session cookie exists
+		cu, err := r.Cookie("user")
+		if err != nil || len(cu.Value) == 0 {
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+
+		// TODO: check the cookie is valid
+		if err := Verify(c.Value, cu.Value); err != nil {
+			http.Redirect(w, r, "/login", 302)
+			return
+		}
+
+		// run the handler
+		h(w, r)
+	}
 }

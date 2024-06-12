@@ -111,7 +111,7 @@ func mdToHTML(md []byte) []byte {
 	return markdown.Render(doc, renderer)
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	id := uuid.New().String()
 	channel := "general"
 
@@ -306,7 +306,7 @@ type Req struct {
 	Channel  string `json:"channel",omitempty`
 }
 
-func channelHandler(w http.ResponseWriter, r *http.Request) {
+func ChannelHandler(w http.ResponseWriter, r *http.Request) {
 	mutex.Lock()
 
 	html := "<h1>Channels</h1>"
@@ -330,7 +330,7 @@ func channelHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(mu.Template("Channels", "List of channels", "", html)))
 }
 
-func promptHandler(w http.ResponseWriter, r *http.Request) {
+func PromptHandler(w http.ResponseWriter, r *http.Request) {
 	b, _ := ioutil.ReadAll(r.Body)
 	var req Req
 	json.Unmarshal(b, &req)
@@ -430,8 +430,4 @@ func Register() {
 	load()
 
 	go save()
-
-	http.HandleFunc("/chat", indexHandler)
-	http.HandleFunc("/chat/prompt", promptHandler)
-	http.HandleFunc("/chat/channels", channelHandler)
 }

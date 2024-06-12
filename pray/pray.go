@@ -76,7 +76,7 @@ func printSchedule(city string, t1, t2 prayer.Schedule) string {
 	return str
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	date := time.Now().Format(time.DateOnly)
 
 	nav := ""
@@ -112,6 +112,4 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func Register() {
-	http.HandleFunc("/pray", indexHandler)
-}
+func Register() {}

@@ -6,7 +6,7 @@ import (
 	"mu.dev"
 )
 
-func homeHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	html := mu.Template("Home", "Home screen", `<a href="/logout">Logout</a>`, `
 <style>
 #title {
@@ -51,6 +51,4 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(html))
 }
 
-func Register() {
-	http.HandleFunc("/home", homeHandler)
-}
+func Register() {}

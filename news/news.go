@@ -149,13 +149,13 @@ func saveHtml(head, data []byte) {
 	os.WriteFile(cache, news, 0644)
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	mutex.RLock()
 	defer mutex.RUnlock()
 	w.Write(news)
 }
 
-func statusHandler(w http.ResponseWriter, r *http.Request) {
+func StatusHandler(w http.ResponseWriter, r *http.Request) {
 	mutex.RLock()
 	b, _ := json.Marshal(status)
 	mutex.RUnlock()
@@ -448,7 +448,7 @@ func getSunnah() string {
 	return ""
 }
 
-func feedsHandler(w http.ResponseWriter, r *http.Request) {
+func FeedsHandler(w http.ResponseWriter, r *http.Request) {
 	mutex.RLock()
 	defer mutex.RUnlock()
 
@@ -467,9 +467,4 @@ func Register() {
 	loadFeed()
 
 	go parseFeed()
-
-	http.HandleFunc("/news", indexHandler)
-	// http.HandleFunc("/add", addHandler)
-	http.HandleFunc("/news/feeds", feedsHandler)
-	http.HandleFunc("/news/status", statusHandler)
 }

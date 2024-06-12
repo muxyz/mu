@@ -158,7 +158,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	return data
 }
 
-func indexHandler(w http.ResponseWriter, r *http.Request) {
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	nav := `
 	<a href="#1" class=head>The Opening</a>
 	<a href="#2:255" class=head>The Throne</a>
@@ -173,6 +173,4 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 
 func Register() {
 	load()
-
-	http.HandleFunc("/reminder", indexHandler)
 }

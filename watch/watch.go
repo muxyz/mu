@@ -136,7 +136,7 @@ form {
   <button>Submit</button>
 </form>`
 
-func watchHandler(w http.ResponseWriter, r *http.Request) {
+func WatchHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	q := r.Form.Get("q")
 
@@ -201,6 +201,4 @@ func watchHandler(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(html))
 }
 
-func Register() {
-	http.HandleFunc("/watch", watchHandler)
-}
+func Register() {}
