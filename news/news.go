@@ -397,55 +397,59 @@ func getSunnah() string {
 	}
 
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	book := "bukhari"
-
-	for i := 0; i < 3; i++ {
-		hadith := r.Intn(7564)
-
-		// reset
-		if hadith == 0 {
-			hadith = 1
-		}
-		// reset
-		if hadith == 7564 {
-			hadith = 7563
-		}
-
-		uri := fmt.Sprintf("https://api.sunnah.com/v1/collections/%s/hadiths/%d", book, hadith)
-		req, err := http.NewRequest("GET", uri, nil)
-		if err != nil {
-			return ""
-		}
-
-		req.Header.Set("X-API-Key", sunnah_key)
-		req.Header.Set("Accept", "application/json")
-
-		rsp, err := http.DefaultClient.Do(req)
-		if err != nil {
-			continue
-		}
-		defer rsp.Body.Close()
-		b, _ := ioutil.ReadAll(rsp.Body)
-
-		var resp map[string]interface{}
-		json.Unmarshal(b, &resp)
-
-		if v := resp["error"]; v != nil {
-			continue
-		}
-
-		h := resp["hadith"].([]interface{})
-		if len(h) == 0 {
-			continue
-		}
-		had := h[0].(map[string]interface{})
-		title := had["chapterTitle"].(string)
-		text := had["body"].(string)
-
-		return fmt.Sprintf(`%s<br>%s<a href="https://sunnah.com/%s:%d">%s:%d</a>`, title, text, book, hadith, book, hadith)
+	books := map[string]int{
+		"bukhari": 7563,
+		"muslim": 3033,
 	}
 
-	return ""
+	var hadiths []string
+
+	for book, limit := range books {
+		for i := 0; i < 3; i++ {
+			hadith := r.Intn(limit)
+
+			// reset
+			if hadith == 0 {
+				hadith = 1
+			}
+
+			uri := fmt.Sprintf("https://api.sunnah.com/v1/collections/%s/hadiths/%d", book, hadith)
+			req, err := http.NewRequest("GET", uri, nil)
+			if err != nil {
+				return ""
+			}
+
+			req.Header.Set("X-API-Key", sunnah_key)
+			req.Header.Set("Accept", "application/json")
+
+			rsp, err := http.DefaultClient.Do(req)
+			if err != nil {
+				continue
+			}
+			defer rsp.Body.Close()
+			b, _ := ioutil.ReadAll(rsp.Body)
+
+			var resp map[string]interface{}
+			json.Unmarshal(b, &resp)
+
+			if v := resp["error"]; v != nil {
+				continue
+			}
+
+			h := resp["hadith"].([]interface{})
+			if len(h) == 0 {
+				continue
+			}
+			had := h[0].(map[string]interface{})
+			title := had["chapterTitle"].(string)
+			text := had["body"].(string)
+
+			hadiths = append(hadiths, fmt.Sprintf(`<div><b>%s</b><br>%s<a href="https://sunnah.com/%s:%d">%s:%d</a></div>`, title, text, book, hadith, book, hadith))
+			break
+		}
+	}
+
+	return strings.Join(hadiths, "<br>")
 }
 
 func FeedsHandler(w http.ResponseWriter, r *http.Request) {
