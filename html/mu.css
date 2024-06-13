@@ -41,6 +41,9 @@
         margin-bottom: 10px;
         border: 0;
         border-radius: 10px;
+	font-size: 1.2em;
+	font-weight: bold;
+	color: darkslategrey;
       }
       .apps button:hover {
         background: #f6f6f6;
