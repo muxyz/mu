@@ -1,13 +1,21 @@
 package home
 
 import (
+	"fmt"
 	"net/http"
 
 	"mu.dev"
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	html := mu.Template("Home", "Home screen", `<a href="/logout">Logout</a>`, `
+	nav := `<a href="/logout">Logout</a>`
+
+	c, err := r.Cookie("user")
+	if err == nil && len(c.Value) > 0 {
+		nav = fmt.Sprintf("<p>%s</p>", c.Value) + nav
+	} 
+
+	html := mu.Template("Home", "Home screen", nav, `
 <style>
 #title {
   margin-top: 100px;
