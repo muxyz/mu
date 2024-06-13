@@ -13,7 +13,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	c, err := r.Cookie("user")
 	if err == nil && len(c.Value) > 0 {
 		nav = fmt.Sprintf("<a href=# class=head><b>%s</b></a>", c.Value) + nav
-	} 
+	}
 
 	html := mu.Template("Home", "Home screen", nav, `
 <style>

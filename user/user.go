@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"sort"
 	"sync"
 	"time"
 
@@ -68,13 +69,20 @@ func Admin(w http.ResponseWriter, r *http.Request) {
 
 	var div string
 
+	var userList []string
 	mutex.Lock()
 	for _, user := range users {
-		div += fmt.Sprintf(`<div class="user">%s</div>`, user.Username)
+		userList = append(userList, user.Username)
 	}
 	mutex.Unlock()
+	sort.Strings(userList)
+
+	for _, user := range userList {
+		div += fmt.Sprintf(`<div class="user">%s</div>`, user)
+	}
+
 	// list the users
-	html := mu.Template("Admin", "User Admin", "", `<h1>Users</h1>`+div)
+	html := mu.Template("Admin", "User Admin", "", `<h1 style="padding-top: 100px;">Users</h1>`+div)
 	w.Write([]byte(html))
 }
 
