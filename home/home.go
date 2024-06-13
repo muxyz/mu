@@ -8,11 +8,11 @@ import (
 )
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
-	nav := `<a href="/logout">Logout</a>`
+	nav := `<a href="/logout" class="head">Logout</a>`
 
 	c, err := r.Cookie("user")
 	if err == nil && len(c.Value) > 0 {
-		nav = fmt.Sprintf("<p><b>%s</b></p>", c.Value) + nav
+		nav = fmt.Sprintf("<a href=# class=head><b>%s</b></a>", c.Value) + nav
 	} 
 
 	html := mu.Template("Home", "Home screen", nav, `
