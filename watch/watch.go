@@ -7,7 +7,6 @@ import (
 	"net/http"
 	"net/url"
 	"os"
-	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -20,7 +19,12 @@ var Key = os.Getenv("YOUTUBE_API_KEY")
 var Client, _ = youtube.NewService(context.TODO(), option.WithAPIKey(Key))
 
 var mutex sync.Mutex
+
+// recent query cache keyed by the query string
 var Recent = map[string]string{}
+
+// searches by user
+var Searches = map[string][]string{}
 
 func init() {
 	mu.Load(&Recent, "recent.json", false)
@@ -66,33 +70,38 @@ func getResults(q string) (string, error) {
 	return results, nil
 }
 
-func makeNav() string {
+func makeNav(uid string) string {
 	// build the nav
 	var nav string
-	var i int
 
 	mutex.Lock()
 
-	var keys []string
+	searches := Searches[uid]
 
-	for k, _ := range Recent {
-		keys = append(keys, k)
-	}
-
-	sort.Strings(keys)
-
-	for _, k := range keys {
+	for i := len(searches); i > 0; i-- {
+		k := searches[i-1]
 		nav += fmt.Sprintf(`<a class="head" href="/watch?q=%s">%s</a>`, url.QueryEscape(k), k)
-		i++
-
-		if i > 10 {
-			break
-		}
 	}
 
 	mutex.Unlock()
 
 	return nav
+}
+
+func saveSearch(uid string, q string) {
+	searches := Searches[uid]
+
+	var seen bool
+	for _, k := range searches {
+		if q == k {
+			seen = true
+		}
+	}
+	if !seen {
+		searches = append(searches, q)
+	}
+
+	Searches[uid] = searches
 }
 
 var Results = `
@@ -140,10 +149,19 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
 	q := r.Form.Get("q")
 
+	var uid string
+	c, err := r.Cookie("user")
+	if err != nil {
+		uid = "default"
+	} else if len(c.Value) > 0 {
+		uid = c.Value
+	}
+
 	if r.Method == "POST" {
 		// check recent cache
 		mutex.Lock()
 		results, ok := Recent[q]
+		saveSearch(uid, q)
 		mutex.Unlock()
 
 		if !ok {
@@ -161,10 +179,9 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 			Recent[q] = results
 			mu.Save(Recent, "recent.json", false)
 			mutex.Unlock()
-
 		}
 
-		nav := makeNav()
+		nav := makeNav(uid)
 
 		html := mu.Template("Watch", q+" | Results", nav, fmt.Sprintf(Results, q, results))
 		w.Write([]byte(html))
@@ -172,7 +189,7 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	id := r.Form.Get("id")
-	nav := makeNav()
+	nav := makeNav(uid)
 
 	// render watch page
 	if len(id) > 0 {
@@ -184,6 +201,13 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 
 	// GET
 	// check recent cache
+
+	if len(q) == 0 {
+		html := mu.Template("Watch", "Watch YouTube Videos", nav, Template)
+		w.Write([]byte(html))
+		return
+	}
+
 	mutex.Lock()
 	results, ok := Recent[q]
 	mutex.Unlock()

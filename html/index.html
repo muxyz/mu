@@ -24,39 +24,46 @@
 	
 	<p id="description">We provide the building blocks for life as easy to use Micro apps</p>
 	  <style>
-             .b { width: 200px; display: inline-block; vertical-align: middle; padding: 10px; margin: 0;}
-	     .apps button { font-family: times; font-weight: bold; }
+             .b { display: inline-block; vertical-align: middle; padding: 10px; margin: 0; font-weight: normal; font-size: small; }
+	     .apps button { font-family: times; font-weight: bold; margin-right: 10px; height: 120px; padding: 20px;}
+	     .apps { max-width: 800px; }
+	     @media only screen and (max-width: 650px) {
+		      .apps button {
+          		width: 100%;
+          		height: 120px;
+        	      }
+	     }
 	  </style>
 	  <div class="apps">
 	    <a href="#chat">
 	      <button>
 		Chat
+	       <p class=b>Chat with AI for general knowledge questions</p>
 	      </button>
-	      <p class=b>Chat with AI for general knowledge questions</p>
 	    </a>
 	    <a href="#news">
 	      <button>
 		News
+	        <p class=b>Get the latest news headlines and market data</p>
 	      </button>
-	      <p class=b>Get the latest news headlines and market data</p>
 	    </a>
 	    <a href="#pray">
 	      <button>
 		Pray
+	        <p class=b>Find local Islamic prayer times wherever you are</p>
 	      </button>
-	      <p class=b>Find local Islamic prayer times wherever you are</p>
 	    </a>
 	    <a href="#reminder">
 	      <button>
 		Reminder
+	        <p class=b>Read the holy quran in English as a reminder everyday</p>
 	      </button>
-	      <p class=b>Read the holy quran in English as a reminder everyday</p>
 	    </a>
 	    <a href="#watch">
 	      <button>
 		Watch
+	        <p class=b>Search and watch YouTube videos without all the noise</p>
 	      </button>
-	      <p class=b>Search and watch YouTube videos without all the noise</p>
 	    </a>
 	  </div>
 
