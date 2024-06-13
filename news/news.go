@@ -399,7 +399,7 @@ func getSunnah() string {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 	books := map[string]int{
 		"bukhari": 7563,
-		"muslim": 3033,
+		"muslim":  3033,
 	}
 
 	var hadiths []string

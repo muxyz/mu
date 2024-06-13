@@ -4,7 +4,9 @@ package user
 import (
 	"encoding/base64"
 	"errors"
+	"fmt"
 	"net/http"
+	"os"
 	"sync"
 	"time"
 
@@ -17,6 +19,8 @@ var mutex sync.Mutex
 var users = map[string]*Account{}
 var sessions = map[string]*Session{}
 
+var admin = os.Getenv("USER_ADMIN")
+
 func init() {
 	// load users
 	mu.Load(&users, "users.enc", true)
@@ -27,6 +31,7 @@ type Account struct {
 	ID       string
 	Username string
 	Password string
+	Created  time.Time
 }
 
 type Session struct {
@@ -41,6 +46,36 @@ func newSess(acc *Account) *Session {
 		Username: acc.Username,
 	}
 	return sess
+}
+
+// Admin is the user admin
+func Admin(w http.ResponseWriter, r *http.Request) {
+	// get user cookie
+	c, err := r.Cookie("user")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	if len(c.Value) == 0 || len(admin) == 0 {
+		return
+	}
+
+	// check if its the admin
+	if c.Value != admin {
+		return
+	}
+
+	var div string
+
+	mutex.Lock()
+	for _, user := range users {
+		div += fmt.Sprintf(`<div class="user">%s</div>`, user.Username)
+	}
+	mutex.Unlock()
+	// list the users
+	html := mu.Template("Admin", "User Admin", "", `<h1>Users</h1>`+div)
+	w.Write([]byte(html))
 }
 
 // Login a user

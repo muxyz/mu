@@ -44,6 +44,8 @@ Allow: /`))
 	http.HandleFunc("/logout", user.LogoutHandler)
 	http.HandleFunc("/signup", user.SignupHandler)
 
+	http.HandleFunc("/user/admin", user.Auth(user.Admin))
+
 	// watch
 	http.HandleFunc("/watch", user.Auth(watch.WatchHandler))
 
