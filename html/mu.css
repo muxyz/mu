@@ -16,6 +16,12 @@
       h1 a {
         text-decoration: none;
       }
+      input {
+        padding: 10px;
+      }
+      button {
+        padding: 10px;
+      }
       #header {
 	padding: 25px;
       }
