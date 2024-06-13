@@ -36,6 +36,14 @@ Run it
 mu
 ```
 
+## Admin
+
+A basic user admin on `/admin` displays the users. It requires `USER_ADMIN` to be set to the user who can view it
+
+```
+export USER_ADMIN=asim
+```
+
 Goto `localhost:8080`
 ## APIs
 
