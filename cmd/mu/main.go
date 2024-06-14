@@ -29,7 +29,7 @@ Allow: /`))
 	http.HandleFunc("/home", user.Auth(home.IndexHandler))
 
 	// news
-	http.HandleFunc("/news", user.Auth(news.IndexHandler))
+	http.HandleFunc("/news", news.IndexHandler)
 	http.HandleFunc("/news/feeds", user.Auth(news.FeedsHandler))
 	http.HandleFunc("/news/status", user.Auth(news.StatusHandler))
 	// http.HandleFunc("/add", addHandler)
