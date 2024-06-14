@@ -186,7 +186,7 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 		nav := makeNav(uid)
 
 		html := mu.Template("Watch", q+" | Results", nav, fmt.Sprintf(Results, q, results))
-		w.Write([]byte(html))
+		mu.Render(w, html)
 		return
 	}
 
@@ -197,7 +197,7 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 	if len(id) > 0 {
 		// get the page
 		html := fmt.Sprintf(`<html><body><div class="video" style="padding-top: 100px">%s</div></body></html>`, embedVideo(id))
-		w.Write([]byte(html))
+		mu.Render(w, html)
 		return
 	}
 
@@ -206,7 +206,7 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 
 	if len(q) == 0 {
 		html := mu.Template("Watch", "Watch YouTube Videos", nav, Template)
-		w.Write([]byte(html))
+		mu.Render(w, html)
 		return
 	}
 
@@ -224,7 +224,7 @@ func WatchHandler(w http.ResponseWriter, r *http.Request) {
 
 	html := mu.Template("Watch", "Watch YouTube Videos", nav, content)
 
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func Register() {}

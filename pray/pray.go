@@ -108,7 +108,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	out := mu.Template("Pray", "Islamic Prayer Times", nav, fmt.Sprintf(template, content))
-	w.Write([]byte(out))
+	mu.Render(w, out)
 	return
 }
 

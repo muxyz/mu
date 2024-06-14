@@ -12,7 +12,7 @@ func Handler(w http.ResponseWriter, r *http.Request) {
 	<h1 style="padding-top: 100px">Work</h1>
 	<p>No jobs posted yet</p>
 	`)
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func Register() {}

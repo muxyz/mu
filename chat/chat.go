@@ -296,7 +296,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
       }, false);
     </script>
 	`)
-	w.Write([]byte(t))
+	mu.Render(w, t)
 }
 
 type Req struct {
@@ -327,7 +327,8 @@ func ChannelHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	mutex.Unlock()
 
-	w.Write([]byte(mu.Template("Channels", "List of channels", "", html)))
+	t := mu.Template("Channels", "List of channels", "", html)
+	mu.Render(w, t)
 }
 
 func PromptHandler(w http.ResponseWriter, r *http.Request) {

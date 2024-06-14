@@ -83,7 +83,7 @@ func Admin(w http.ResponseWriter, r *http.Request) {
 
 	// list the users
 	html := mu.Template("Admin", "User Admin", "", `<h1 style="padding-top: 100px;">Users</h1>`+div)
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 // Login a user
@@ -208,7 +208,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 </form>
 </div>
 `)
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func SignupHandler(w http.ResponseWriter, r *http.Request) {
@@ -263,7 +263,7 @@ func SignupHandler(w http.ResponseWriter, r *http.Request) {
 </form>
 </div>
 `)
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func LogoutHandler(w http.ResponseWriter, r *http.Request) {

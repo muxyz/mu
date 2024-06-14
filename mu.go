@@ -218,6 +218,12 @@ func Load(data interface{}, file string, decrypt bool) error {
 	return load(data, file, Key, decrypt)
 }
 
+// Render the template
+func Render(w http.ResponseWriter, tmpl string) error {
+	_, err := w.Write([]byte(tmpl))
+	return err
+}
+
 // The standard HTML template
 func Template(name, desc, nav, content string) string {
 	return fmt.Sprintf(`<!DOCTYPE html>

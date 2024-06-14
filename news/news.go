@@ -126,7 +126,7 @@ func addHandler(w http.ResponseWriter, r *http.Request) {
 
 	html := mu.Template("Add Feed", "Add a news feed", "", form)
 
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func saveFeed() {
@@ -463,7 +463,7 @@ func FeedsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	html := mu.Template("Feeds", "News RSS feeds", "", data)
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func Register() {

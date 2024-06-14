@@ -168,7 +168,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	`
 
 	html := mu.Template("Reminder", "Read the Quran", nav, HTML)
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func Register() {

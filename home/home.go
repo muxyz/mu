@@ -61,7 +61,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	  </div>
 	`)
 
-	w.Write([]byte(html))
+	mu.Render(w, html)
 }
 
 func Register() {}
