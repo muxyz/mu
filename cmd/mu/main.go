@@ -11,6 +11,7 @@ import (
 	"mu.dev/reminder"
 	"mu.dev/user"
 	"mu.dev/watch"
+	"mu.dev/work"
 )
 
 func main() {
@@ -20,7 +21,7 @@ Allow: /`))
 	})
 
 	// chat
-	http.HandleFunc("/chat", user.Auth(chat.IndexHandler))
+	http.HandleFunc("/chat", chat.IndexHandler)
 	http.HandleFunc("/chat/prompt", user.Auth(chat.PromptHandler))
 	http.HandleFunc("/chat/channels", user.Auth(chat.ChannelHandler))
 
@@ -34,21 +35,19 @@ Allow: /`))
 	// http.HandleFunc("/add", addHandler)
 
 	// pray
-	http.HandleFunc("/pray", user.Auth(pray.IndexHandler))
+	http.HandleFunc("/pray", pray.IndexHandler)
 
 	// reminder
-	http.HandleFunc("/reminder", user.Auth(reminder.IndexHandler))
+	http.HandleFunc("/reminder", reminder.IndexHandler)
 
-	// user
+	// user auth
+	http.HandleFunc("/admin", user.Auth(user.Admin))
 	http.HandleFunc("/login", user.LoginHandler)
 	http.HandleFunc("/logout", user.LogoutHandler)
 	http.HandleFunc("/signup", user.SignupHandler)
 
-	// user admin
-	http.HandleFunc("/admin", user.Auth(user.Admin))
-
 	// watch
-	http.HandleFunc("/watch", user.Auth(watch.WatchHandler))
+	http.HandleFunc("/watch", watch.WatchHandler)
 
 	// work
 	http.HandleFunc("/work", work.Handler)
