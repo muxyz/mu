@@ -223,7 +223,7 @@ func Template(name, desc, nav, content string) string {
 	return fmt.Sprintf(`<!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>%s | Mu</title>
+  <title>%s | %s</title>
   <meta name="description" content="%s">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="/mu.css">
@@ -310,7 +310,7 @@ func Template(name, desc, nav, content string) string {
   <div id="content">%s</div>
 </body>
 </html>
-`, name, desc, nav, content)
+`, name, desc, desc, nav, content)
 
 }
 

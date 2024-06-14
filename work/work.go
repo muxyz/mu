@@ -7,9 +7,8 @@ import (
 )
 
 func Handler(w http.ResponseWriter, r *http.Request) {
-	html := mu.Template("Work", "Do good work", "", `
-	<h1 style="padding-top: 100px;">Work</h1>
-	<h3>Find work, do work, get paid!</h3>
+	html := mu.Template("Work", "Do work, get paid", "", `
+	<h1 style="padding-top: 100px">Work</h1>
 	<p>No jobs posted yet</p>
 
 	<a href="mailto:contact@mu.xyz">Post a job</a>
