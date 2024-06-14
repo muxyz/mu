@@ -157,7 +157,7 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 		text += fmt.Sprintf(`<div class="%s">%s</div>`, class, m)
 	}
 
-	t := mu.Template("Chat", "Reflections of self", `
+	t := mu.Template("Chat", "Ask an AI", `
       <a href="#general" class="head">General</a>
       <a href="#crypto" class="head">Crypto</a>
       <a href="#islam" class="head">Islam</a>
