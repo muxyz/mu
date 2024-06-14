@@ -27,6 +27,7 @@ var Recent = map[string]string{}
 var Searches = map[string][]string{}
 
 func init() {
+	mu.Load(&Searches, "searches.enc", true)
 	mu.Load(&Recent, "recent.json", false)
 }
 
@@ -102,6 +103,7 @@ func saveSearch(uid string, q string) {
 	}
 
 	Searches[uid] = searches
+	mu.Save(Searches, "searches.enc", true)
 }
 
 var Results = `

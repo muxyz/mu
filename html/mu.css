@@ -33,13 +33,12 @@
       }
       .apps button {
         height: 100px;
-        width: 200px;
+        width: 150px;
         cursor: pointer;
         margin-bottom: 10px;
         border: 0;
         border-radius: 10px;
 	color: darkslategrey;
-	font-size: 1.2em;
       }
       .apps button:hover {
         background: #f6f6f6;
