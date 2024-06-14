@@ -20,6 +20,9 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 #title {
   margin-top: 100px;
 }
+.apps {
+  max-width: 600px;
+}
 .apps a {
   margin-right: 10px;
 }
