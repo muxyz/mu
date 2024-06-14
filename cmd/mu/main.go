@@ -50,6 +50,9 @@ Allow: /`))
 	// watch
 	http.HandleFunc("/watch", user.Auth(watch.WatchHandler))
 
+	// work
+	http.HandleFunc("/work", work.Handler)
+
 	// any other stuff
 	chat.Register()
 	home.Register()
@@ -58,6 +61,7 @@ Allow: /`))
 	reminder.Register()
 	user.Register()
 	watch.Register()
+	work.Register()
 
 	mu.Serve(8080)
 }
