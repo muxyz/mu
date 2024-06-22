@@ -271,6 +271,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
       var hash = window.location.hash.replace("#", "");
 
+      if (hash.length == 0) {
+        hash = "`+channel+`";
+      }
+
       var el = document.querySelectorAll('#nav a');
       for (let i = 0; i < el.length; i++) {
 	if (el[i].href == "/") {
@@ -294,6 +298,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	window.location.reload();
       }, false);
+
+      window.onload = (event) => { 
+        
+      }
     </script>
 	`)
 	mu.Render(w, t)

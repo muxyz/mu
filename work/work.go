@@ -29,8 +29,7 @@ import (
 } 
   
 .control-buttons { 
-    margin-top: 75px; 
-    display: flex; 
+    margin-top: 50px; 
     justify-content: space-evenly; 
 } 
   
@@ -50,6 +49,7 @@ import (
 </style>
 
 <div class="main">
+        <h1 id="title"></h1><br>
 	<div class="timer-circle" 
              id="timer">60:00 
           </div> 
@@ -71,6 +71,8 @@ let isPaused = false;
 let enteredTime = null; 
   
 function startTimer() { 
+    // immediate update
+    updateTimer()
     timer = setInterval(updateTimer, 1000); 
 } 
   
@@ -125,8 +127,19 @@ function restartTimer() {
     pauseResumeButton.textContent = 'Pause'; 
     startTimer(); 
 } 
+
+function setTitle() {
+	let title = prompt("Set your intention", "Work");
+	if (title != null) {
+		var t = document.getElementById("title");
+		t.innerText = title;
+	}
+}
   
-window.onload = (event) => { startTimer() }
+window.onload = (event) => { 
+	setTitle()
+	startTimer()
+}
 </script>
 `
 
