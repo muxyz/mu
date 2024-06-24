@@ -4,9 +4,7 @@ A Muslim app platform
 
 ## Overview
 
-Mu is a Muslim app platform that provides a simple set of building blocks for life. It was born out of frustration with existing services using Ads or creating addictive behaviours. The goal is to create a separate system that addresses daily needs and nothing else. Part of that 
-is focusing on Muslim related requirements like prayer times, the quran in english, etc. Other parts are related to dev interests like 
-hacker news, open source, crypto.
+Mu is a Muslim app platform that provides a simple set of building blocks for life. It was born out of a frustration with existing services not catering to Muslims. Most tech platforms create addictive behaviours through their algorithms. The intention is to create a separate system that fixes this. Part of the goal is to focus on things like prayer times, the quran in english, etc. Other parts are related to interests like reading news, open source activity and crypto.
 
 ## Apps
 
