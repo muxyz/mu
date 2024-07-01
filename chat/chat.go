@@ -34,7 +34,6 @@ var channels = map[string]*Channel{
 	"finance":  new(Channel),
 	"health":  new(Channel),
 	"islam":   new(Channel),
-	"world":    new(Channel),
 	"misc":    new(Channel),
 }
 
@@ -163,7 +162,6 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
       <a href="#finance" class="head">Finance</a>
       <a href="#health" class="head">Health</a>
       <a href="#islam" class="head">Islam</a>
-      <a href="#world" class="head">World</a>
       <a href="#misc" class="head">Misc</a>`, `
     <style>
       #input {
