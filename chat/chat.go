@@ -31,10 +31,11 @@ type Channel struct {
 
 var channels = map[string]*Channel{
 	"general": new(Channel),
-	"crypto":  new(Channel),
+	"finance":  new(Channel),
+	"health":  new(Channel),
 	"islam":   new(Channel),
-	"news":    new(Channel),
-	"test":    new(Channel),
+	"world":    new(Channel),
+	"misc":    new(Channel),
 }
 
 type Command func(*Channel, string) string
@@ -159,9 +160,10 @@ func IndexHandler(w http.ResponseWriter, r *http.Request) {
 
 	t := mu.Template("Chat", "Ask an AI", `
       <a href="#general" class="head">General</a>
-      <a href="#crypto" class="head">Crypto</a>
+      <a href="#finance" class="head">Finance</a>
+      <a href="#health" class="head">Health</a>
       <a href="#islam" class="head">Islam</a>
-      <a href="#news" class="head">News</a>
+      <a href="#world" class="head">World</a>
       <a href="#misc" class="head">Misc</a>`, `
     <style>
       #input {
